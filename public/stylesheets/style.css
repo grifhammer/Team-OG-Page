@@ -1,0 +1,19 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #88AA78;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.header-wrap{
+    margin: auto;
+    text-align: center;
+    background-color: black;
+    background-image: url('../HeaderImage.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500px;
+}
+
