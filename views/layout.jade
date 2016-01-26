@@ -10,19 +10,19 @@ html
     .navbar.navbar-default
         .container-fluid
             ul.nav.nav-pills.nav-justified
-                li.active
+                li(class=((active == "home") ? 'active' : ""))
                     a(href="/") Home 
-                li 
+                li(class=((active == "team") ? 'active' : ""))
                     a(href="/team") Team
-                li 
+                li(class=((active == "matches") ? 'active' : ""))
                     a(href="/matches") Matches
-                li 
+                li(class=((active == "statistics") ? 'active' : ""))
                     a(href="/statistics") Statistics
-                li 
+                li(class=((active == "store") ? 'active' : ""))
                     a(href="/store") Store
-                li 
+                li(class=((active == "results") ? 'active' : ""))
                     a(href="/Results") Results
-                li 
+                li(class=((active == "schedule") ? 'active' : ""))
                     a(href="/schedule") Schedule
 
     block content

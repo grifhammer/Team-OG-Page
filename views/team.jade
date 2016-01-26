@@ -6,6 +6,14 @@ block content
         h1= "Meet the Team"
         p Here are some dudes: #{title}
         if (team.length > 0)
-            p Team exists!
+            .team-wrap
+            each teamMember in team
+                .team-member.col-sm-4
+                    h3= teamMember.tag
+                    p= teamMember.fullName
+                    p= teamMember.position
+                    p= teamMember.nationality
+                    img(src=teamMember.image)
+
         else
             p Team Does Not EXIST!
