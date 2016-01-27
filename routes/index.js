@@ -6,7 +6,8 @@ var Members = require('../models/team-members');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Team OG',
-                        active: "home" });
+                        active: "home",
+                        teamId: req.query.teamId || ""});
 });
 
 router.get('/team', function(req, res, next){

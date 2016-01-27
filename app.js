@@ -10,6 +10,13 @@ var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var generate = require('./routes/generate');
+var vars = require('./config/vars.json');
+
+if(!process.env.PROD_STEAM_KEY){
+    var vars = require('./config/vars.json');
+}
+var steamKey = process.env.PROD_STEAM_KEY || vars.apiKey;
 
 var app = express();
 
@@ -26,6 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/generate', generate); 
 app.use('/users', users);
 
 var mainDbUrl;
