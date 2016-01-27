@@ -19,23 +19,38 @@ router.post('/team', function (req, res, next){
     https.get(getTeamEndpoint, function (res){
         res.on('data', function (data){
             dataJSON = JSON.parse(data)
-            // console.log(dataJSON)
             team = dataJSON.result.teams[0]
-            console.log(parseInt(req.body.teamId));
+            console.log(team);
+            var playerList = []
+            var leagueList = []
+            for(var i = 0; i < 10; i++){
+                thisLeague = "league_id_" + i;
+                thisPlayer = "player_" + i + "_account_id"
+                if(team[thisPlayer]){
+                    playerList.push(team[thisPlayer]);
+                }
+                if(team[thisLeague]){
+                    leagueList.push(team[thisLeague]);
+                }
+            }
+            console.log(playerList)
+            console.log(leagueList)
+            // Insert team into database
+
             Team.findOneAndUpdate({}, {  id: parseInt(req.body.teamId),
                                                             name: team.name,
                                                             tag: team.tag,
                                                             nationality: team.country_code,
-                                                            logo: team.logo }, {upsert: true},function (error, result){
+                                                            logo: team.logo,
+                                                            players: playerList,
+                                                            leagues: leagueList }, {upsert: true},function (error, result){
                                                                 if(error){
                                                                     console.log(error);
                                                                 }
-                                                                console.log(result);
-                                                            })
+                                                            });
         });
 
     });
-    // Insert team into database
     // Fetch all player info
     // Insert Players into team DB
     res.redirect('/?teamId='+ req.body.teamId);
