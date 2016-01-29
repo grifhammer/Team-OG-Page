@@ -1,13 +1,15 @@
 var https = require('https');
-var request = require('request');
+var RateLimiter = require('limiter').RateLimiter;
 var BigNumber = require("bignumber.js");
 var DataManager = require('../data-manager')
-DataManager = new DataManager;
 
+var limiter = new RateLimiter(10, 'second');
+DataManager = new DataManager;
 
 
 var getTeamBaseUrl = "https://api.steampowered.com/IDOTA2Match_570/GetTeamInfoByTeamID/v001/";
 var getMatchesBaseURL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/";
+var getMatchDetailsBaseURL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v001/";
 var getPlayerBaseURL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/"
 
 function SteamManager(steamKey){
@@ -28,7 +30,6 @@ SteamManager.prototype.buildLeagueList = function(teamObj){
     var leagueList = []
     var currLeague = '0';
     while(teamObj['league_id_'+ currLeague]){
-        console.log(teamObj['league_id_'+ currLeague])
         leagueList.push(teamObj['league_id_'+ currLeague])
         currLeague++;
     }
@@ -46,16 +47,41 @@ SteamManager.prototype.buildPlayerData = function(playerId){
     });
 }
 
-SteamManager.prototype.findTeamMatches = function (league, teamId, index){
-    var getLeagueMatchesEndpoint = getMatchesBaseURL + "?key=" + this.steamKey + "&league_id="+ league + "&min_players=10";
+SteamManager.prototype.findTeamMatches = function (league, teamId){
+    var getLeagueMatchesEndpoint = getMatchesBaseURL + "?key=" + this.steamKey + "&league_id="+ league;
 
     var self = this;
-    console.log(getLeagueMatchesEndpoint)
-    request({url: getLeagueMatchesEndpoint,
-            json: true},
-            function (err, res, body){
-                console.log(JSON.parse(res))
+
+    https.get(getLeagueMatchesEndpoint, function (res){
+        var body = ''
+        res.on('data', function (data){
+            body += data;
+        });
+        res.on('end', function(){
+            var matches = JSON.parse(body).result.matches;
+            matches.forEach(function (match){
+                if(match.radiant_team_id == teamId ||
+                    match.dire_team_id == teamId){
+                    self.getMatchDetails(match.match_id);
+                }
             });
+        });
+    });
+}
+
+SteamManager.prototype.getMatchDetails = function(matchId){
+    var getMatchDetailsEndpoint = getMatchDetailsBaseURL + "?key=" + this.steamKey + "&match_id=" + matchId
+    https.get(getMatchDetailsEndpoint, function (res){
+        var body = ''
+        res.on('data', function (data){
+            body += data;
+        });
+        res.on('end', function (){
+            var matchDetails = JSON.parse(body).result;
+            DataManager.insertMatch(matchDetails);
+            // console.log(matchDetails);
+        });
+    })
 }
 
 SteamManager.prototype.buildTeamData = function(teamId){
@@ -80,11 +106,11 @@ SteamManager.prototype.buildTeamData = function(teamId){
                 playerList.forEach(function (player){
                     self.buildPlayerData(player);
                 });
-                // console.log(leagueList)
-                leagueList.forEach(function (league, index, array){
-                    // console.log(index)
-                    // console.log(league);
-                    self.findTeamMatches(league, teamId, index);
+
+                leagueList.forEach(function (league){
+                    limiter.removeTokens(1, function(){
+                        self.findTeamMatches(league, teamId);
+                    })
                 });
 
             });

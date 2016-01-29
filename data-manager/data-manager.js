@@ -1,5 +1,6 @@
 var TeamMember = require('../models/team-members');
 var Team = require('../models/team');
+var Match = require('../models/match')
 
 function MongooseManager(){
     return this;
@@ -18,7 +19,7 @@ MongooseManager.prototype.insertPlayer = function(steamProfile) {
                                     if(error){
                                         console.log(error);
                                     }
-                                })
+                                });
 };
 
 MongooseManager.prototype.insertTeam = function(team){
@@ -36,6 +37,25 @@ MongooseManager.prototype.insertTeam = function(team){
                                 return error;
                             }
                           })
+}
+
+MongooseManager.prototype.insertMatch = function(match){
+    Match.findOneAndUpdate( {id: match.match_id},
+                            {id: match.match_id,
+                             radiant_id: match.radiant_team_id,
+                             dire_id: match.dire_team_id,
+                             dire_team: match.players,
+                             dire_items: match.players, 
+                             radiant_team: [],
+                             radiant_items: [], 
+                             winner: "dire"},
+                             {upsert: true}, 
+                             function (error, result){
+                                if(error){
+                                    console.log(error);
+                                }
+                                console.log(result);
+                             })
 }
 
 module.exports = MongooseManager
