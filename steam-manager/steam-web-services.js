@@ -1,4 +1,5 @@
 var https = require('https');
+var request = require('request');
 var BigNumber = require("bignumber.js");
 var DataManager = require('../data-manager')
 DataManager = new DataManager;
@@ -6,6 +7,7 @@ DataManager = new DataManager;
 
 
 var getTeamBaseUrl = "https://api.steampowered.com/IDOTA2Match_570/GetTeamInfoByTeamID/v001/";
+var getMatchesBaseURL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/";
 var getPlayerBaseURL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/"
 
 function SteamManager(steamKey){
@@ -24,9 +26,10 @@ SteamManager.prototype.buildPlayerList = function(teamObj){
 
 SteamManager.prototype.buildLeagueList = function(teamObj){
     var leagueList = []
-    var currLeague = 0;
+    var currLeague = '0';
     while(teamObj['league_id_'+ currLeague]){
-        leagueList.push(teamObj['league_id_'+ currLeague ])
+        console.log(teamObj['league_id_'+ currLeague])
+        leagueList.push(teamObj['league_id_'+ currLeague])
         currLeague++;
     }
     return leagueList
@@ -43,8 +46,16 @@ SteamManager.prototype.buildPlayerData = function(playerId){
     });
 }
 
-SteamManager.prototype.findTeamMatches = function (league, teamId){
+SteamManager.prototype.findTeamMatches = function (league, teamId, index){
+    var getLeagueMatchesEndpoint = getMatchesBaseURL + "?key=" + this.steamKey + "&league_id="+ league + "&min_players=10";
 
+    var self = this;
+    console.log(getLeagueMatchesEndpoint)
+    request({url: getLeagueMatchesEndpoint,
+            json: true},
+            function (err, res, body){
+                console.log(JSON.parse(res))
+            });
 }
 
 SteamManager.prototype.buildTeamData = function(teamId){
@@ -52,9 +63,7 @@ SteamManager.prototype.buildTeamData = function(teamId){
     var getTeamEndpoint = getTeamBaseUrl + "?key="+ this.steamKey + "&start_at_team_id=" + teamId + "&teams_requested=1";
 
     var self = this;
-
-    https.get(getTeamEndpoint, function (self){
-        return function (res){
+    https.get(getTeamEndpoint,function (res){
             res.on('data', function (data){
                 dataJSON = JSON.parse(data);
                 team = dataJSON.result.teams[0];
@@ -71,14 +80,15 @@ SteamManager.prototype.buildTeamData = function(teamId){
                 playerList.forEach(function (player){
                     self.buildPlayerData(player);
                 });
-
-                leagueList.forEach(function (league){
-                    self.findTeamMatches(league, teamId);
+                // console.log(leagueList)
+                leagueList.forEach(function (league, index, array){
+                    // console.log(index)
+                    // console.log(league);
+                    self.findTeamMatches(league, teamId, index);
                 });
 
             });
-        };
-    }(self));
+        });
 }
 
 module.exports = SteamManager
