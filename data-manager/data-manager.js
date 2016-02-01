@@ -10,7 +10,7 @@ MongooseManager.prototype.insertPlayer = function(steamProfile) {
     TeamMember.findOneAndUpdate({id: steamProfile.steamid},
                                 {fullName: steamProfile.realname,
                                  tag: steamProfile.personaname,
-                                 age: steamProfile.timecreated,
+                                 age: steamProfile.lastlogoff,
                                  nationality: steamProfile.loccountrycode,
                                  position: "Unknown",
                                  image: steamProfile.avatarfull},
@@ -40,21 +40,23 @@ MongooseManager.prototype.insertTeam = function(team){
 }
 
 MongooseManager.prototype.insertMatch = function(match){
+    var dire_players = match.players.slice(0,5);
+    var radiant_players = match.players.slice(5,10);
+    console.log(match.radiant_win);
     Match.findOneAndUpdate( {id: match.match_id},
-                            {id: match.match_id,
+                            {$set: {id: match.match_id,
                              radiant_id: match.radiant_team_id,
                              dire_id: match.dire_team_id,
-                             dire_team: match.players,
+                             dire_team: dire_players,
                              dire_items: match.players, 
-                             radiant_team: [],
-                             radiant_items: [], 
-                             winner: "dire"},
+                             radiant_team: radiant_players,
+                             radiant_items: radiant_players, 
+                             winner: match.radiant_win ? "radiant": "dire"}},
                              {upsert: true}, 
                              function (error, result){
                                 if(error){
                                     console.log(error);
                                 }
-                                console.log(result);
                              })
 }
 

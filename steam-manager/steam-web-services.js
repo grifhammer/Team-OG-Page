@@ -62,7 +62,9 @@ SteamManager.prototype.findTeamMatches = function (league, teamId){
             matches.forEach(function (match){
                 if(match.radiant_team_id == teamId ||
                     match.dire_team_id == teamId){
-                    self.getMatchDetails(match.match_id);
+                    limiter.removeTokens(1, function(){
+                        self.getMatchDetails(match.match_id);
+                    });
                 }
             });
         });
@@ -79,7 +81,6 @@ SteamManager.prototype.getMatchDetails = function(matchId){
         res.on('end', function (){
             var matchDetails = JSON.parse(body).result;
             DataManager.insertMatch(matchDetails);
-            // console.log(matchDetails);
         });
     })
 }
@@ -87,7 +88,7 @@ SteamManager.prototype.getMatchDetails = function(matchId){
 SteamManager.prototype.buildTeamData = function(teamId){
     
     var getTeamEndpoint = getTeamBaseUrl + "?key="+ this.steamKey + "&start_at_team_id=" + teamId + "&teams_requested=1";
-
+    console.log(getTeamEndpoint);
     var self = this;
     https.get(getTeamEndpoint,function (res){
             res.on('data', function (data){
@@ -100,11 +101,14 @@ SteamManager.prototype.buildTeamData = function(teamId){
                 
                 team.playerList = playerList;
                 team.leagueList = leagueList;
-                
+                console.log(playerList);
+                console.log(leagueList);
                 DataManager.insertTeam(team);
 
                 playerList.forEach(function (player){
-                    self.buildPlayerData(player);
+                    limiter.removeTokens(1, function(){
+                        self.buildPlayerData(player);
+                    });
                 });
 
                 leagueList.forEach(function (league){
