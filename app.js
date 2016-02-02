@@ -9,14 +9,16 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 
 var routes = require('./routes/index');
+var api = require('./routes/api');
 var users = require('./routes/users');
 var generate = require('./routes/generate');
 var vars = require('./config/vars.json');
 
-if(!process.env.PROD_STEAM_KEY){
-    var vars = require('./config/vars.json');
-}
+var SteamManager = require('./steam-manager/');
+var vars = require('./config/vars.json');
 var steamKey = process.env.PROD_STEAM_KEY || vars.apiKey;
+
+SteamManager = new SteamManager(steamKey);
 
 var app = express();
 
@@ -33,6 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/api', api);
 app.use('/generate', generate); 
 app.use('/users', users);
 
@@ -44,6 +47,8 @@ if(process.env.PROD_MONGODB){
 }
 
 mongoose.connect(mainDbUrl);
+
+SteamManager.getItemList();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -16,4 +16,11 @@ a {
     background-repeat: no-repeat;
     height: 500px;
 }
+.item {
+  height: 30px;
+}
+
+.item img{
+  width: 100%;
+}
 

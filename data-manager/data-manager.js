@@ -1,6 +1,7 @@
 var TeamMember = require('../models/team-members');
 var Team = require('../models/team');
 var Match = require('../models/match')
+var Item = require('../models/item')
 
 function MongooseManager(){
     return this;
@@ -21,6 +22,23 @@ MongooseManager.prototype.insertPlayer = function(steamProfile) {
                                     }
                                 });
 };
+
+MongooseManager.prototype.insertItem = function(item){
+    // remove 'item_' from front of item name in order to use it to get images
+    var cdnImgURL = "http://cdn.dota2.com/apps/dota2/images/items/" + item.name.slice(5,item.name.length) + "_lg.png";
+  Item.findOneAndUpdate({id: item.id},
+                        {id: item.id,
+                         itemName: item.name,
+                         localizedName: item.localized_name,
+                         cost: item.cost,
+                         cdnImgURL: cdnImgURL},
+                         {upsert: true},
+                         function (error, result){
+                          if(error){
+                            console.log(error);
+                          }
+                         });
+}
 
 MongooseManager.prototype.insertTeam = function(team){
     Team.findOneAndUpdate({id: team.team_id},

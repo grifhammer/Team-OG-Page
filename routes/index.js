@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Members = require('../models/team-members');
 var Match = require('../models/match')
+var Item = require('../models/item')
 
 
 /* GET home page. */
@@ -22,16 +23,25 @@ router.get('/team', function(req, res, next){
 });
 
 router.get('/matches', function (req, res, next){
-    Match.find({}).limit(25).exec( function (err, result){
+    Match.find({}).limit(25).exec( function (err, matches){
         if(err){
             res.render('error', {
                 error: err
             });
             return;
         }
-        res.render('matches', {
-            active: 'matches',
-            matches: result
+        Item.find({}, function (err, items){
+            if(err){
+                res.render('error', {
+                    error: err
+                });
+                return;
+            }
+            res.render('matches', {
+                active: 'matches',
+                matches: matches,
+                items: items
+            });
         })
     });
 })
