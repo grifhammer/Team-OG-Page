@@ -49,6 +49,7 @@ if(process.env.PROD_MONGODB){
 mongoose.connect(mainDbUrl);
 
 SteamManager.getItemList();
+SteamManager.getHeroList();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,11 +5,14 @@ block content
         h1= "These are some matches"
         p Here are the most recent 25 matches;
         .matches-wrap.row
-            .match-wrap.col-sm-12(ng-show="itemsLoaded", ng-repeat='match in matches')
+            .match-wrap.col-sm-12(ng-show="itemsLoaded && heroesLoaded", ng-repeat='match in matches')
                 p Match ID: {{match.id}}
                 .dire-team.row
+                    h3 Dire
                     .dire-player(ng-repeat="player in match.dire_team")
-                        .hero.col-sm-2 Hero ID: {{player.hero_id}}
+                        .hero-wrap.col-sm-2
+                            .hero
+                                img(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
                             .item-wrap.row
                                 .item.col-sm-4
                                     img(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")
@@ -24,8 +27,11 @@ block content
                                 .item.col-sm-4
                                     img(ng-src="{{itemsLoaded ? getItemImg(player.item_5) : ''}}")
                 .radiant-team.row
+                    h3 Radiant
                     .radiant-player(ng-repeat="player in match.radiant_team")
-                        .hero.col-sm-2 Hero ID: {{player.hero_id}}
+                        .hero-wrap.col-sm-2
+                            .hero
+                                img(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
                             .item-wrap.row
                                 .item.col-sm-4
                                     img(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")

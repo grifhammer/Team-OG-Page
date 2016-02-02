@@ -12,6 +12,7 @@ var getMatchesBaseURL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHi
 var getMatchDetailsBaseURL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v001/";
 var getPlayerBaseURL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/"
 var getItemsBaseURL = "https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/"
+var getHeroesBaseURL = "https://api.steampowered.com/IEconDOTA2_570/GetHeroes/V001/"
 
 function SteamManager(steamKey){
     this.steamKey = steamKey;
@@ -84,6 +85,22 @@ SteamManager.prototype.getItemList = function(){
             var items = JSON.parse(body).result.items;
             items.forEach(function (item){
                 DataManager.insertItem(item);
+            })
+        });
+    })
+}
+
+SteamManager.prototype.getHeroList = function(){
+    var getHeroesEndpoint = getHeroesBaseURL + "?key=" + this.steamKey + "&language=en"
+    https.get(getHeroesEndpoint, function (res){
+        var body = ""
+        res.on('data', function (data){
+            body += data;
+        });
+        res.on('end', function(){
+            var heroes = JSON.parse(body).result.heroes;
+            heroes.forEach(function (hero){
+                DataManager.insertHero(hero);
             })
         });
     })
