@@ -24,6 +24,18 @@ MongooseManager.prototype.insertPlayer = function(steamProfile) {
                                 });
 };
 
+
+MongooseManager.prototype.updatePlayer = function(player, callback){
+  TeamMember.findOneAndUpdate({id: player.id},
+                              {fullName: player.fullName,
+                               tag: player.tag,
+                               age: player.age,
+                               nationality: player.nationality,
+                               position: player.position,
+                               image: player.image},
+                               callback);
+}
+
 MongooseManager.prototype.insertItem = function(item){
     // remove 'item_' from front of item name in order to use it to get images
   var cdnImgURL = "http://cdn.dota2.com/apps/dota2/images/items/" + item.name.slice(5,item.name.length) + "_lg.png";
@@ -41,6 +53,8 @@ MongooseManager.prototype.insertItem = function(item){
                          });
 }
 
+
+
 MongooseManager.prototype.insertHero = function(hero){
     // remove 'item_' from front of item name in order to use it to get images
     var cdnImgURL = "http://cdn.dota2.com/apps/dota2/images/heroes/" + hero.name.slice(14,hero.name.length) + "_lg.png";
@@ -54,7 +68,6 @@ MongooseManager.prototype.insertHero = function(hero){
                           if(error){
                             console.log(error);
                           }
-                          console.log(result);
                          });
 }
 
@@ -73,6 +86,18 @@ MongooseManager.prototype.insertTeam = function(team){
                                 return error;
                             }
                           })
+}
+
+MongooseManager.prototype.updateTeam = function(team, callback){
+    Team.findOneAndUpdate({id: team.id},
+                          {id: team.id,
+                           name: team.name,
+                           tag: team.tag,
+                           nationality: team.nationality,
+                           logo: team.logo,
+                           players: team.players,
+                           leagues: team.leagues},
+                           callback)
 }
 
 MongooseManager.prototype.insertMatch = function(match){
@@ -94,6 +119,12 @@ MongooseManager.prototype.insertMatch = function(match){
                                     console.log(error);
                                 }
                              })
+}
+
+MongooseManager.prototype.resetDatabase = function(){
+  Team.remove({}, function(err){ console.log(err) });
+  TeamMember.remove({}, function(err){ console.log(err) });
+  Match.remove({}, function(err){ console.log(err) });
 }
 
 module.exports = MongooseManager

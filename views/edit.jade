@@ -1,0 +1,19 @@
+extends layout
+
+
+block content
+    .container(ng-controller="pageGenerationCntrl" ng-init="teamMembers = #{JSON.stringify(teamMembers)}; team = #{JSON.stringify(team)}")
+        button.btn.btn-danger.btn-lg(ng-click="deleteTeam()") DELETE
+        .player-wrap(ng-hide="teamEdited")
+            .team-member.col-sm-4(ng-repeat="teamMember in teamMembers")
+                img.img-thumbnail.center-block(ng-src="{{teamMember.image}}")
+                input.form-control(ng-model="teamMember.tag")
+                input.form-control(ng-model="teamMember.fullName")
+                input.form-control(type="number", ng-model="teamMember.age")
+                input.form-control(ng-model="teamMember.nationality")
+                input.form-control(ng-model="teamMember.image")
+            button.btn.btn-primary(ng-click="submitPlayers()") Submit Changes
+        .team-wrap(ng-show="teamEdited")
+            .team-member.col-sm-4
+                input(ng-model="team.name")
+            button.btn.btn-primary(ng-click="submitTeam()") Submit Changes

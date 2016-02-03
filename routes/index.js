@@ -2,14 +2,32 @@ var express = require('express');
 var router = express.Router();
 var Members = require('../models/team-members');
 var Match = require('../models/match')
+var Team = require('../models/team')
 var Item = require('../models/item')
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Team OG',
-                        active: "home",
-                        teamId: req.query.teamId || ""});
+    Team.find({}, function (err, teams){
+        var active = 'generate'
+
+        if (teams.length > 0){
+            console.log(teams[0].id)
+            Members.find({}, function (err, players){
+                console.log(players);
+                res.render('edit', {title: 'Team OG',
+                                 active: active,
+                                 teamId: req.query.teamId || "",
+                                 teamMembers: players,
+                                 team: teams[0]});
+            });
+            
+        }
+        else{
+            res.render('index', {title: 'Team OG',
+                                 active: active,
+                                 teamId: req.query.teamId || "" });
+        }
+    })
 });
 
 router.get('/team', function(req, res, next){

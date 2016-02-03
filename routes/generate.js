@@ -15,4 +15,5 @@ router.post('/team', function (req, res, next){
     res.redirect('/?teamId='+ req.body.teamId);
 });
 
+
 module.exports = router;

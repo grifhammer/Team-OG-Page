@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/api', api);
 app.use('/generate', generate); 
-app.use('/users', users);
 
 var mainDbUrl;
 if(process.env.PROD_MONGODB){

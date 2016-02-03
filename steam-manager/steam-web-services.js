@@ -123,7 +123,6 @@ SteamManager.prototype.getMatchDetails = function(matchId){
 SteamManager.prototype.buildTeamData = function(teamId){
     
     var getTeamEndpoint = getTeamBaseUrl + "?key="+ this.steamKey + "&start_at_team_id=" + teamId + "&teams_requested=1";
-    console.log(getTeamEndpoint);
     var self = this;
     https.get(getTeamEndpoint,function (res){
             res.on('data', function (data){
@@ -136,8 +135,6 @@ SteamManager.prototype.buildTeamData = function(teamId){
                 
                 team.playerList = playerList;
                 team.leagueList = leagueList;
-                console.log(playerList);
-                console.log(leagueList);
                 DataManager.insertTeam(team);
 
                 playerList.forEach(function (player){
