@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var SteamManager = require('../steam-manager/');
-var vars = require('../config/vars.json');
+if(!process.env.PROD_STEAM_KEY){
+    var vars = require('./config/vars.json');
+}
 var steamKey = process.env.PROD_STEAM_KEY || vars.apiKey;
 
 SteamManager = new SteamManager(steamKey);
