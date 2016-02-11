@@ -29,9 +29,12 @@ block content
             input.btn.btn-primary.center-block(type="submit" ng-click="submitPlayers()" value="Submit Changes") 
         form.team-wrap.edit-form(ng-show="teamEdited")
             .team-info-edit.col-sm-4
-                logo.img-thumbnail.center-block(img="{{team.logo}}")
+                //- logo.img-thumbnail.center-block(img="{{team.logo}}")
                 .form-group
                     label(for="teamName") Team Name
                     input.form-control(name="teamName", ng-model="team.name")
+                .form-group
+                    label(for="teamTag") Team Tag
+                    input.form-control(name="teamTag", ng-model="team.tag")
             .btn-wrap.col-sm-12
                 input.btn.btn-primary.center-block(type="submit", ng-click="submitTeam()", value="Submit Changes")
