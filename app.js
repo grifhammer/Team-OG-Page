@@ -12,7 +12,6 @@ var routes = require('./routes/index');
 var api = require('./routes/api');
 var users = require('./routes/users');
 var generate = require('./routes/generate');
-var vars = require('./config/vars.json');
 
 var SteamManager = require('./steam-manager/');
 if(!process.env.PROD_STEAM_KEY){
