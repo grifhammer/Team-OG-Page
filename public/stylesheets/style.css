@@ -43,6 +43,10 @@ a {
   float: left;
 }
 
+.container-fluid{
+  width: 90%;
+}
+
 .item img{
   max-height: 45px;
 }

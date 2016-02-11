@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    .container(ng-controller="matchesCntrl", ng-init="matches=#{JSON.stringify(matches)}")
+    .container-fluid(ng-controller="matchesCntrl", ng-init="matches=#{JSON.stringify(matches)}")
         h1= "These are some matches"
         p Here are the most recent 25 matches;
         .matches-wrap.row
@@ -32,8 +32,8 @@ block content
                     .radiant.player(ng-repeat="player in match.radiant_team")
                         .hero-wrap.col-sm-2
                             .hero
-                                img.img-thumbnail(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
-                            .item-wrap.row
+                                img.img-thumbnail.center-block(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
+                            .item-wrap.row.center-block
                                 .item.col-sm-4
                                     img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")
                                 .item.col-sm-4
