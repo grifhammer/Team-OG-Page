@@ -54,6 +54,36 @@ a {
   width: 100%;
 }
 
+.dire-team{
+  background-color: rgba(194,60,42,0.12);
+  width: 95%;
+  padding: 0px 1% 10px;
+  margin: auto;
+}
+
+.radiant-team{
+  background-color: rgba(146,165,37,0.12);
+  width: 95%;
+  padding: 10px 1%;
+  margin: 10px auto;
+}
+
+.dire-text{
+  color: #C23C2A;
+}
+
+.Dire-text{
+  color: #C23C2A;
+}
+
+.radiant-text{
+  color: #A9CF54;
+}
+
+.Radiant-text{
+  color: #A9CF54;
+}
+
 .team-member{
   height: 350px;
 }
