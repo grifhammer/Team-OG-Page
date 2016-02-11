@@ -101,18 +101,19 @@ MongooseManager.prototype.updateTeam = function(team, callback){
 }
 
 MongooseManager.prototype.insertMatch = function(match){
-    var dire_players = match.players.slice(0,5);
-    var radiant_players = match.players.slice(5,10);
-    console.log(match.radiant_win);
+    var radiant_players = match.players.slice(0,5);
+    var dire_players = match.players.slice(5,10);
     Match.findOneAndUpdate( {id: match.match_id},
                             {$set: {id: match.match_id,
                              radiant_id: match.radiant_team_id,
                              dire_id: match.dire_team_id,
+                             radiant_name: match.radiant_name,
+                             dire_name: match.dire_name,
                              dire_team: dire_players,
                              dire_items: match.players, 
                              radiant_team: radiant_players,
                              radiant_items: radiant_players, 
-                             winner: match.radiant_win ? "radiant": "dire"}},
+                             winner: match.radiant_win ? "Radiant": "Dire"}},
                              {upsert: true}, 
                              function (error, result){
                                 if(error){

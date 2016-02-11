@@ -132,9 +132,13 @@ SteamManager.prototype.buildTeamData = function(teamId){
                 var playerList = self.buildPlayerList(team);
 
                 var leagueList = self.buildLeagueList(team);
+
                 
                 team.playerList = playerList;
                 team.leagueList = leagueList;
+
+                console.log(team);
+
                 DataManager.insertTeam(team);
 
                 playerList.forEach(function (player){

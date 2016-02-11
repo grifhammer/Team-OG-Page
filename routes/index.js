@@ -11,9 +11,7 @@ router.get('/', function(req, res, next) {
         var active = 'generate'
 
         if (teams.length > 0){
-            console.log(teams[0].id)
             Members.find({}, function (err, players){
-                console.log(players);
                 res.render('edit', {title: 'Team OG',
                                  active: active,
                                  teamId: req.query.teamId || "",
@@ -41,7 +39,7 @@ router.get('/team', function(req, res, next){
 });
 
 router.get('/matches', function (req, res, next){
-    Match.find({}).limit(25).exec( function (err, matches){
+    Match.find({}).sort({id: -1}).limit(25).exec( function (err, matches){
         if(err){
             res.render('error', {
                 error: err

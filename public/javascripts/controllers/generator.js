@@ -1,18 +1,3 @@
-var teamApp = angular.module('teamPage', ['ngRoute'])
-teamApp.config(function ($routeProvider, $locationProvider){
-    $routeProvider.when('/generate/team', {
-        templateUrl: 'views/team-edit.html',
-        controller: 'teamEdit'
-    }).
-    when('/generate/players', {
-        templateUrl: 'views/player-edit.html',
-        controller: 'playerEdit'
-    }).
-    when('/generate/leagues', {
-        emplateUrl: 'views/league-edit.html',
-        controller: 'leagueEdit'
-    })
-});
 
 teamApp.controller('pageGenerationCntrl', function ($scope, $http){
 

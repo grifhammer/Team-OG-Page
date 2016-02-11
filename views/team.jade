@@ -4,16 +4,15 @@ extends layout
 block content
     .container
         h1= "Meet the Team"
-        p Here are the members of #{team.name}
         if (team.length > 0)
             .team-wrap
             each teamMember in teamMembers
                 .team-member.col-sm-4
                     h3= teamMember.tag
+                    img.img-thumbnail(src='#{teamMember.image}')
                     p= teamMember.fullName
                     p= teamMember.position
                     p= teamMember.nationality
-                    img.img-thumbnail(src='#{teamMember.image}')
 
         else
             p Team Does Not EXIST!

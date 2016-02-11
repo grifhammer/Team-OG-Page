@@ -26,7 +26,9 @@ router.post('/delete', function (req, res, next){
     if(req.body.deleteAuth == true){
         DataManager.resetDatabase();
     }
-    res.end();
+    setTimeout(function(){
+        res.redirect('/');
+    },1000)
 });
 
 
@@ -48,7 +50,7 @@ router.post('/team', function (req, res, next){
         if(err){
             console.log(err)
         }
-        res.end();
+        res.render('edit');
     });
 });
 

@@ -6,42 +6,42 @@ block content
         p Here are the most recent 25 matches;
         .matches-wrap.row
             .match-wrap.col-sm-12(ng-show="itemsLoaded && heroesLoaded", ng-repeat='match in matches')
-                p Match ID: {{match.id}}
+                p Match ID: {{match.id}} {{match.winner}}
                 .dire-team.row
-                    h3 Dire
-                    .dire-player(ng-repeat="player in match.dire_team")
+                    h3 Dire Team: {{match.dire_name}}
+                    .dire.player(ng-repeat="player in match.dire_team")
                         .hero-wrap.col-sm-2
                             .hero
-                                img(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
-                            .item-wrap.row
+                                img.img-thumbnail.center-block(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
+                            .item-wrap.row.text-center
+                                .item.col-sm-4.center-block
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_1) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_1) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_2) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_2) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_3) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_3) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_4) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_4) : ''}}")
-                                .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_5) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_5) : ''}}")
                 .radiant-team.row
-                    h3 Radiant
-                    .radiant-player(ng-repeat="player in match.radiant_team")
+                    h3 Radiant Team: {{match.radiant_name}}
+                    .radiant.player(ng-repeat="player in match.radiant_team")
                         .hero-wrap.col-sm-2
                             .hero
-                                img(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
+                                img.img-thumbnail(ng-src="{{heroesLoaded ? getHeroImg(player.hero_id) : ''}}")
                             .item-wrap.row
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_0) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_1) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_1) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_2) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_2) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_3) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_3) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_4) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_4) : ''}}")
                                 .item.col-sm-4
-                                    img(ng-src="{{itemsLoaded ? getItemImg(player.item_5) : ''}}")
+                                    img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_5) : ''}}")

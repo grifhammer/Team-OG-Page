@@ -1,6 +1,7 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #88AA78;
+  background-color: #1C252E;
+  color: #A9CF54;
 }
 
 a {
@@ -11,24 +12,55 @@ a {
     margin: auto;
     text-align: center;
     background-color: black;
-    background-image: url('../HeaderImage.jpg');
+    background-image: url('../DefaultBanner.jpg');
     background-position: center;
     background-repeat: no-repeat;
     height: 500px;
 }
-.item {
-  height: 30px;
+
+.player{
+  background-color: #242F39;
+}
+.match-wrap{
+  background-color: #242F39;
+  margin: 10px 0px;
+
 }
 
-.item img{
+.item-wrap{
   width: 100%;
 }
 
+.item{
+  max-height: 45px;
+  padding: 0px;
+}
+
+.hero-wrap{
+  width: 20%;
+  float: left;
+}
+
+.item img{
+  max-height: 45px;
+}
 .hero{
   margin-bottom: 10px;
+  background-color: #242F39;
+  overflow: hidden;
 }
 
 .hero img{
   width: 100%;
+}
+
+.team-member{
+  height: 350px;
+}
+
+.team-member-edit{
+  background-color: #242F39;
+  margin-top: 10px;
+  height: 615px;
 }
 

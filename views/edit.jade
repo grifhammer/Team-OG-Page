@@ -3,17 +3,35 @@ extends layout
 
 block content
     .container(ng-controller="pageGenerationCntrl" ng-init="teamMembers = #{JSON.stringify(teamMembers)}; team = #{JSON.stringify(team)}")
-        button.btn.btn-danger.btn-lg(ng-click="deleteTeam()") DELETE
-        .player-wrap(ng-hide="teamEdited")
-            .team-member.col-sm-4(ng-repeat="teamMember in teamMembers")
-                img.img-thumbnail.center-block(ng-src="{{teamMember.image}}")
-                input.form-control(ng-model="teamMember.tag")
-                input.form-control(ng-model="teamMember.fullName")
-                input.form-control(type="number", ng-model="teamMember.age")
-                input.form-control(ng-model="teamMember.nationality")
-                input.form-control(ng-model="teamMember.image")
-            button.btn.btn-primary(ng-click="submitPlayers()") Submit Changes
-        .team-wrap(ng-show="teamEdited")
-            .team-member.col-sm-4
-                input(ng-model="team.name")
-            button.btn.btn-primary(ng-click="submitTeam()") Submit Changes
+        button.btn.btn-danger.btn-lg.center-block(ng-click="deleteTeam()") Reset Team
+        form.player-wrap.edit-form(ng-hide="teamEdited")
+            .team-wrap
+                .team-member-edit.col-sm-4(ng-repeat="teamMember in teamMembers")
+                    img.img-thumbnail.center-block(ng-src="{{teamMember.image}}")
+                    .form-group
+                        label(for='tag') Tag
+                        input.form-control(name="tag", ng-model="teamMember.tag")
+                    .form-group
+                        label(for='fullName') Full Name
+                        input.form-control(name="fullName", ng-model="teamMember.fullName")
+                    .form-group
+                        label(for='age') Age
+                        input.form-control(name="age", type="number", ng-model="teamMember.age")
+                    .form-group
+                        label(for='nationality') Nationality
+                        input.form-control(name="nationality", ng-model="teamMember.nationality")
+                    .form-group
+                        label(for='image') Image Url
+                        input.form-control(name="image", ng-model="teamMember.image")
+                    .form-group
+                        label(for="position") Position
+                        input.form-control(name="position", ng-model="teamMember.position")
+            input.btn.btn-primary.center-block(type="submit" ng-click="submitPlayers()" value="Submit Changes") 
+        form.team-wrap.edit-form(ng-show="teamEdited")
+            .team-info-edit.col-sm-4
+                logo.img-thumbnail.center-block(img="{{team.logo}}")
+                .form-group
+                    label(for="teamName") Team Name
+                    input.form-control(name="teamName", ng-model="team.name")
+            .btn-wrap.col-sm-12
+                input.btn.btn-primary.center-block(type="submit", ng-click="submitTeam()", value="Submit Changes")
