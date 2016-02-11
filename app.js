@@ -15,7 +15,9 @@ var generate = require('./routes/generate');
 var vars = require('./config/vars.json');
 
 var SteamManager = require('./steam-manager/');
-var vars = require('./config/vars.json');
+if(!process.env.PROD_STEAM_KEY){
+    var vars = require('./config/vars.json');
+}
 var steamKey = process.env.PROD_STEAM_KEY || vars.apiKey;
 
 SteamManager = new SteamManager(steamKey);
