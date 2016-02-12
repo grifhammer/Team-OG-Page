@@ -122,10 +122,23 @@ MongooseManager.prototype.insertMatch = function(match){
                              })
 }
 
-MongooseManager.prototype.resetDatabase = function(){
-  Team.remove({}, function(err){ console.log(err) });
-  TeamMember.remove({}, function(err){ console.log(err) });
-  Match.remove({}, function(err){ console.log(err) });
+MongooseManager.prototype.resetDatabase = function(callback){
+  Team.remove({}, function(err){ 
+    if(err){
+      console.log(err) 
+    }
+    callback();
+  });
+    
+  TeamMember.remove({}, function(err){ 
+    if(err){
+      console.log(err) }
+    });
+  Match.remove({}, function(err){
+    if(err){
+      console.log(err)
+    }  
+  });
 }
 
 module.exports = MongooseManager

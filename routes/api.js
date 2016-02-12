@@ -23,12 +23,16 @@ router.get('/heroes', function(req, res, next) {
 });
 
 router.post('/delete', function (req, res, next){
+    
     if(req.body.deleteAuth == true){
-        DataManager.resetDatabase();
+        DataManager.resetDatabase(function(){
+            setTimeout(function(){
+                console.log('rendering index');
+                res.redirect('/');
+            },1000);
+        });
     }
-    setTimeout(function(){
-        res.redirect('/');
-    },1000)
+    
 });
 
 
@@ -40,6 +44,7 @@ router.post('/players', function (req, res, next){
                 console.log(err);
             }
             res.end();
+
         });
     });
 });
@@ -50,7 +55,7 @@ router.post('/team', function (req, res, next){
         if(err){
             console.log(err)
         }
-        res.render('edit');
+        res.redirect('/');
     });
 });
 

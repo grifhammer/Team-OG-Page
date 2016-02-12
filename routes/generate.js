@@ -12,9 +12,13 @@ SteamManager = new SteamManager(steamKey);
 router.post('/team', function (req, res, next){
 
     // Fetch team data
-    SteamManager.buildTeamData(req.body.teamId);
+    SteamManager.buildTeamData(req.body.teamId,function(){
+        setTimeout(function(){
+            res.redirect('/?teamId='+ req.body.teamId);
 
-    res.redirect('/?teamId='+ req.body.teamId);
+        }, 1500);
+    });
+
 });
 
 

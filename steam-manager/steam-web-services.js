@@ -120,7 +120,7 @@ SteamManager.prototype.getMatchDetails = function(matchId){
     })
 }
 
-SteamManager.prototype.buildTeamData = function(teamId){
+SteamManager.prototype.buildTeamData = function(teamId, callback){
     
     var getTeamEndpoint = getTeamBaseUrl + "?key="+ this.steamKey + "&start_at_team_id=" + teamId + "&teams_requested=1";
     var self = this;
@@ -152,6 +152,8 @@ SteamManager.prototype.buildTeamData = function(teamId){
                         self.findTeamMatches(league, teamId);
                     })
                 });
+
+                callback();
 
             });
         });

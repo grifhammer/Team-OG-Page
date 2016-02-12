@@ -12,6 +12,7 @@ router.get('/', function(req, res, next) {
 
         if (teams.length > 0){
             Members.find({}, function (err, players){
+                console.log('rendering edit page');
                 res.render('edit', {title: 'Team OG',
                                  active: active,
                                  teamId: req.query.teamId || "",
@@ -21,6 +22,7 @@ router.get('/', function(req, res, next) {
             
         }
         else{
+            console.log('rendering index page');
             res.render('index', {title: 'Team OG',
                                  active: active,
                                  teamId: req.query.teamId || "" });
