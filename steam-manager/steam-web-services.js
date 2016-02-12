@@ -3,7 +3,7 @@ var RateLimiter = require('limiter').RateLimiter;
 var BigNumber = require("bignumber.js");
 var DataManager = require('../data-manager')
 
-var limiter = new RateLimiter(10, 'second');
+var limiter = new RateLimiter(5, 'second');
 DataManager = new DataManager;
 
 
