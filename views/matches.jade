@@ -7,9 +7,9 @@ block content
         .matches-wrap.row
             .match-wrap.col-sm-12(ng-show="itemsLoaded && heroesLoaded", ng-repeat='match in matches')
                 h2 Match ID: {{match.id}}
-                p(class="{{match.winner}}-text") Winner: {{match.winner}}
+                h3(class="{{match.winner}}-text") Winner: {{match.winner}}
                 .dire-team.row
-                    h3.dire-text Dire Team: {{match.dire_name}}
+                    h4.dire-text Dire Team: {{match.dire_name}}
                     .dire.player(ng-repeat="player in match.dire_team")
                         .hero-wrap.col-sm-2
                             .hero
@@ -28,7 +28,7 @@ block content
                                 .item.col-sm-4
                                     img.img-responsive.center-block(ng-src="{{itemsLoaded ? getItemImg(player.item_5) : ''}}")
                 .radiant-team.row
-                    h3.radiant-text Radiant Team: {{match.radiant_name}}
+                    h4.radiant-text Radiant Team: {{match.radiant_name}}
                     .radiant.player(ng-repeat="player in match.radiant_team")
                         .hero-wrap.col-sm-2
                             .hero

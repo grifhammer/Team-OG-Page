@@ -100,3 +100,11 @@ a {
   height: 615px;
 }
 
+.navbar{
+  min-height: 0px;
+  border: none;
+}
+
+.team-member{
+  background-color: #242F39;
+}
